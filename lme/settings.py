@@ -15,6 +15,8 @@ import os
 from dj_database_url import parse as dburl
 from decouple import config, Csv
 
+import quandl
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -127,3 +129,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = 'media'
+
+
+# Quandl
+quandl.ApiConfig.api_key = config('QUANDL_KEY')
