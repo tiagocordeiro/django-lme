@@ -8,7 +8,12 @@ from .models import TimeSerie, LondonMetalExchange
 
 
 def index(request):
-    return render(request, 'index.html')
+    lme = LondonMetalExchange.objects.all().order_by('-date')[:30]
+
+    context = {
+        'lme': lme,
+    }
+    return render(request, 'index.html', context)
 
 
 @login_required
@@ -26,6 +31,7 @@ def update_database(request):
                               returns='pandas')
 
     todo_periodo.columns = colunas
+    todo_periodo.set_index('Date')
 
     engine = create_engine(config('DATABASE_URL'))
 

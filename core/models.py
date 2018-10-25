@@ -11,8 +11,9 @@ class Serie(models.Model):
     date = models.DateField()
     cash = models.DecimalField(decimal_places=2, max_digits=20)
 
+
 class LondonMetalExchange(models.Model):
-    date = models.DateField(unique=True)
+    date = models.DateField(primary_key=True)
     cobre = models.DecimalField(decimal_places=2, max_digits=20)
     zinco = models.DecimalField(decimal_places=2, max_digits=20)
     aluminio = models.DecimalField(decimal_places=2, max_digits=20)
@@ -21,3 +22,5 @@ class LondonMetalExchange(models.Model):
     niquel = models.DecimalField(decimal_places=2, max_digits=20)
     dolar = models.DecimalField(decimal_places=2, max_digits=20)
 
+    class Meta:
+        verbose_name_plural = "cotação"
