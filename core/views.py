@@ -1,4 +1,5 @@
 import quandl
+import datetime
 from decouple import config
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
@@ -16,9 +17,22 @@ def index(request):
     return render(request, 'index.html', context)
 
 
+def periodo(request, date_from, date_to):
+    date_from = datetime.datetime.strptime(date_from, '%d-%m-%Y')
+    date_to = datetime.datetime.strptime(date_to, '%d-%m-%Y')
+    lme = LondonMetalExchange.objects.filter(date__range=(date_from, date_to))
+
+    context = {
+        'lme': lme,
+        'date_from': date_from,
+        'date_to': date_to,
+    }
+    return render(request, 'index.html', context)
+
+
 @login_required
 def update_database(request):
-    lme = LondonMetalExchange.objects.all()
+    # lme = LondonMetalExchange.objects.all()
     timeseries = TimeSerie.objects.all()
     lista = []
     colunas = []
@@ -31,13 +45,13 @@ def update_database(request):
                               returns='pandas')
 
     todo_periodo.columns = colunas
-    todo_periodo.set_index('Date')
 
     engine = create_engine(config('DATABASE_URL'))
 
     connection = engine.connect()
 
-    todo_periodo.to_sql('core_londonmetalexchange', connection, if_exists='replace')
+    todo_periodo.to_sql('core_londonmetalexchange', connection, if_exists='replace', index=True)
+    todo_periodo.to_csv('cotacao.csv')
 
     connection.close()
 
@@ -46,7 +60,7 @@ def update_database(request):
         'lista': lista,
         'todo_periodo': todo_periodo,
         'colunas': colunas,
-        'lme': lme,
+        # 'lme': lme,
     }
 
     return render(request, 'update_database.html', context)

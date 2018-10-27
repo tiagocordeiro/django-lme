@@ -17,7 +17,7 @@
             <th>Data</th>
             <th>Cobre</th>
             <th>Zinco</th>
-            <th>Alumíniol</th>
+            <th>Alumínio</th>
             <th>Chumbo</th>
             <th>Estanho</th>
             <th>Níquel</th>
@@ -26,7 +26,7 @@
     </thead>
     <tbody>
         {% for cotacao in lme %}
-        <tr>
+        <tr style="text-align: center">
             <td>{{ cotacao.date|date:'d/m/Y' }}</td>
             <td>{{ cotacao.cobre }}</td>
             <td>{{ cotacao.zinco }}</td>
@@ -43,7 +43,7 @@
             <th>Data</th>
             <th>Cobre</th>
             <th>Zinco</th>
-            <th>Alumíniol</th>
+            <th>Alumínio</th>
             <th>Chumbo</th>
             <th>Estanho</th>
             <th>Níquel</th>
@@ -51,6 +51,8 @@
         </tr>
     </tfoot>
 </table>
+
+<p>{{ date_from }} - {{ date_to }}</p>
 
 <script type="application/javascript">
 $(document).ready(function() {
