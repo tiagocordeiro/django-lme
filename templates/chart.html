@@ -7,11 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>LME</title>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.material.min.css">
 {#    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">#}
 {#    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">#}
 
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.material.min.js"></script>
 {#    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>#}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
     <script src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
@@ -31,6 +34,7 @@
 
 <script src="{% static "highcharts/highcharts.js" %}"></script>
 <script src="{% static "highcharts/modules/series-label.js" %}"></script>
+<script src="{% static "highcharts/js/themes/dark-unica.js" %}"></script>
 
 <div id="chart_container"></div>
 
@@ -79,7 +83,7 @@
 
 <script type="text/javascript">
 
-Highcharts.chart('chart_container', {
+var chart = Highcharts.chart('chart_container', {
 
     title: {{ title|safe }},
 
@@ -105,6 +109,31 @@ Highcharts.chart('chart_container', {
 
     credits: {
         enabled: false
+    },
+
+    plotOptions: {
+        series: {
+            events: {
+              show: function () {
+                var chart = this.chart,
+                    series = chart.series,
+                    i = series.length,
+                    otherSeries;
+
+                while (i--) {
+                  otherSeries = series[i];
+                  if (otherSeries != this && otherSeries.visible) {
+                    otherSeries.hide();
+                  }
+                }
+              },
+              legendItemClick: function () {
+                if (this.visible) {
+                  return false;
+                }
+              }
+            }
+        }
     },
 
     series: {{ series|safe }},
@@ -134,10 +163,10 @@ $(document).ready(function() {
 
     $('#lme').DataTable( {
         "order": [[ 0, "desc" ]],
-        scrollY:        "300px",
+        {#scrollY:        "300px",#}
         scrollX:        true,
         scrollCollapse: true,
-        paging:         false,
+        {#paging:         false,#}
         fixedColumns:   {
             leftColumns: 1,
             rightColumns: 1
@@ -149,10 +178,21 @@ $(document).ready(function() {
           "orderable": false,
         } ]
 
-
     } );
 } );
 </script>
+
+<script type="application/javascript">
+$(document).ready(function() {
+    chart.series[0].hide();
+    chart.series[1].hide();
+    chart.series[2].hide();
+    chart.series[3].hide();
+    chart.series[4].hide();
+    chart.series[5].hide();
+} );
+</script>
+
 
 </body>
 </html>
