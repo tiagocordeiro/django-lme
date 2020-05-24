@@ -454,3 +454,4 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+/cotacao.csv

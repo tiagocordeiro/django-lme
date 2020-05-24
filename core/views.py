@@ -28,10 +28,12 @@ def chart(request, chart_id='chart_ID', chart_type='line', chart_height=350):
     date_to = lme_last['date']
     date_from = date_to - timedelta(weeks=5)
 
-    lme_periodo = LondonMetalExchange.objects.filter(date__range=(date_from, date_to))
+    lme_periodo = LondonMetalExchange.objects.filter(
+        date__range=(date_from, date_to))
 
-    df = pd.DataFrame(list(lme_periodo.values('date', 'cobre', 'zinco', 'aluminio',
-                                              'chumbo', 'estanho', 'niquel', 'dolar', )))
+    df = pd.DataFrame(
+        list(lme_periodo.values('date', 'cobre', 'zinco', 'aluminio',
+                                'chumbo', 'estanho', 'niquel', 'dolar', )))
 
     df['date'] = pd.to_datetime(df['date'], utc=True)
 
@@ -97,13 +99,15 @@ def periodo(request, date_from, date_to):
     return render(request, 'index.html', context)
 
 
-def chart_periodo(request, date_from, date_to, chart_id='chart', chart_type='line', chart_height=350):
+def chart_periodo(request, date_from, date_to, chart_id='chart',
+                  chart_type='line', chart_height=350):
     date_from = datetime.strptime(date_from, '%d-%m-%Y')
     date_to = datetime.strptime(date_to, '%d-%m-%Y')
     lme = LondonMetalExchange.objects.filter(date__range=(date_from, date_to))
 
     df = pd.DataFrame(list(lme.values('date', 'cobre', 'zinco', 'aluminio',
-                                      'chumbo', 'estanho', 'niquel', 'dolar', )))
+                                      'chumbo', 'estanho', 'niquel',
+                                      'dolar', )))
 
     df['date'] = pd.to_datetime(df['date'], utc=True)
 
@@ -172,7 +176,8 @@ def update_database(request):
 
     connection = engine.connect()
 
-    todo_periodo.to_sql('core_londonmetalexchange', connection, if_exists='replace', index=True)
+    todo_periodo.to_sql('core_londonmetalexchange', connection,
+                        if_exists='replace', index=True)
     todo_periodo.to_csv('cotacao.csv')
 
     connection.close()

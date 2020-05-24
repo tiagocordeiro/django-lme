@@ -88,7 +88,7 @@ var chart = Highcharts.chart('chart_container', {
     title: {{ title|safe }},
 
     subtitle: {
-        text: 'Source: thesolarfoundation.com'
+        text: 'Source: quandl.com'
     },
 
     yAxis: {{ yAxis|safe }},
@@ -159,7 +159,7 @@ var chart = Highcharts.chart('chart_container', {
 
 <script type="application/javascript">
 $(document).ready(function() {
-    $.fn.dataTable.moment( 'DD/MM/YYY' );
+    $.fn.dataTable.moment( 'DD/MM/YYYY' );
 
     $('#lme').DataTable( {
         "order": [[ 0, "desc" ]],
