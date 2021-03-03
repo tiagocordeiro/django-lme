@@ -87,8 +87,8 @@ def chart(request, chart_id='chart_ID', chart_type='line', chart_height=350):
 
 
 def periodo(request, date_from, date_to):
-    date_from = datetime.datetime.strptime(date_from, '%d-%m-%Y')
-    date_to = datetime.datetime.strptime(date_to, '%d-%m-%Y')
+    date_from = datetime.strptime(date_from, '%d-%m-%Y')
+    date_to = datetime.strptime(date_to, '%d-%m-%Y')
     lme = LondonMetalExchange.objects.filter(date__range=(date_from, date_to))
 
     context = {
