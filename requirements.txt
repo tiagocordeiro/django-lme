@@ -5,7 +5,7 @@ django==3.1.7
 python-decouple==3.4
 
 # Quandl
-Quandl==3.6.0
+Quandl==3.6.1
 
 # Database
 dj-database-url==0.5.0
