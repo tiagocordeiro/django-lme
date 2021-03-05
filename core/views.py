@@ -22,6 +22,15 @@ def index(request):
     return render(request, 'index.html', context)
 
 
+def group_by_week(request):
+    lme = LondonMetalExchange.objects.all().order_by('-date')[:50]
+
+    context = {
+        'lme': lme,
+    }
+    return render(request, 'group_by_week.html', context)
+
+
 def api_view(request, date_from=get_last_five_weeks(), date_to=get_last(), limit=100):
     lme_prices = get_lme(date_from=date_from, date_to=date_to, limit=limit)
 
@@ -113,7 +122,6 @@ def periodo(request, date_from, date_to):
 
 @login_required
 def update_database(request):
-    # lme = LondonMetalExchange.objects.all()
     timeseries = TimeSerie.objects.all()
     lista = []
     colunas = []
@@ -142,7 +150,6 @@ def update_database(request):
         'lista': lista,
         'todo_periodo': todo_periodo,
         'colunas': colunas,
-        # 'lme': lme,
     }
 
     return render(request, 'update_database.html', context)
