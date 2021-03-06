@@ -104,7 +104,10 @@ def chart(request, date_from=get_last_five_weeks(), date_to=get_last(),
         'lme_periodo': lme_periodo,
     }
 
-    return render(request, 'chart.html', context)
+    if request.path == '/grafico/':
+        return render(request, 'chart.html', context)
+
+    return render(request, 'with_chart.html', context)
 
 
 def periodo(request, date_from, date_to):
