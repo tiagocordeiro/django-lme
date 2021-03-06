@@ -39,6 +39,49 @@
 
 <div id="chart_container"></div>
 
+<div>
+  <table id="lme" class="display" style="width:100%">
+    <thead>
+    <tr>
+      <th style="background-color: white">Data</th>
+      <th class="no-sort">Cobre</th>
+      <th class="no-sort">Zinco</th>
+      <th class="no-sort">Alumínio</th>
+      <th class="no-sort">Chumbo</th>
+      <th class="no-sort">Estanho</th>
+      <th class="no-sort">Níquel</th>
+      <th class="no-sort" style="background-color: white">Dolar</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for cotacao in lme %}
+      <tr style="text-align: center">
+        <td>{{ cotacao.date|date:'d/m/Y' }}</td>
+        <td>{{ cotacao.cobre }}</td>
+        <td>{{ cotacao.zinco }}</td>
+        <td>{{ cotacao.aluminio }}</td>
+        <td>{{ cotacao.chumbo }}</td>
+        <td>{{ cotacao.estanho }}</td>
+        <td>{{ cotacao.niquel }}</td>
+        <td>{{ cotacao.dolar }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr>
+      <th style="background-color: white">Data</th>
+      <th>Cobre</th>
+      <th>Zinco</th>
+      <th>Alumínio</th>
+      <th>Chumbo</th>
+      <th>Estanho</th>
+      <th>Níquel</th>
+      <th style="background-color: white">Dolar</th>
+    </tr>
+    </tfoot>
+  </table>
+</div>
+
 <script type="text/javascript">
 
     var chart = Highcharts.chart('chart_container', {
@@ -46,7 +89,7 @@
         title: {{ title|safe }},
 
         subtitle: {
-            text: 'Source: lme.gorilaxpress.com'
+            text: 'Source: quandl.com'
         },
 
         yAxis: {{ yAxis|safe }},
