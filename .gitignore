@@ -454,4 +454,10 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-/cotacao.csv
+# Django local dev folders
+/staticfiles/
+/mediafiles/
+
+$ Database for local dev
+# local postgres data files
+.pgdata
