@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import django_heroku
 
 import quandl
 from decouple import config, Csv
@@ -122,7 +123,17 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
+
+COLLECTFAST_ENABLED = False
 
 # Quandl
 quandl.ApiConfig.api_key = config('QUANDL_KEY')
+
+# Configure Django App for Heroku.
+django_heroku.settings(locals())
+
+# Force ssl if run in Heroku
+if 'DYNO' in os.environ:
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
