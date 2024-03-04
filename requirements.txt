@@ -11,7 +11,7 @@ Quandl==3.6.1
 dj-database-url==0.5.0
 psycopg2==2.8.6
 psycopg2-binary==2.8.6
-SQLAlchemy==1.4.15
+SQLAlchemy==2.0.28
 
 # Heroku
 django-heroku==0.3.1
